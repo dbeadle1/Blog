@@ -12,6 +12,19 @@ image:
 
 We've all been there - you're building a flow in Power Automate that's working perfectly until you hit a frustrating roadblock. For me, it was a Friday afternoon when I discovered a particularly annoying limitation with Custom Prompts.
 
+## What are Custom Prompts in Power Automate?
+
+If you're new to this feature, custom prompts in Power Automate allow you to use AI to generate text within your automated processes. They're part of AI Builder and powered by Azure OpenAI's GPT models (currently GPT 4o Mini and GPT 4o).
+
+Custom prompts can be added as an action in your flows, allowing you to:
+- Generate text based on specific instructions
+- Process input data dynamically
+- Create AI-powered responses as part of your automation
+
+You can either use existing prompts or create new ones directly in your flow. The output (generated text) can then be used in subsequent actions like sending messages, creating documents, or any other step in your workflow.
+
+[Learn more about custom prompts in Power Automate](https://learn.microsoft.com/en-us/ai-builder/use-a-custom-prompt-in-flow)
+
 ## The Challenge with Custom Prompts 🤔
 
 Here's the specific scenario: I have a custom prompt that accepts two dynamic inputs - a text input and a file. Sometimes I'll be including a file and sometimes I won't. And therein lies the problem.
