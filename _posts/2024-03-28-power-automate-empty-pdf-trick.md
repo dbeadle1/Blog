@@ -60,7 +60,6 @@ Here's how to implement this solution in your flow:
 
 1. **Set Up Conditional Logic**
    - Start with your trigger (manual, automated, etc.)
-   - Add a condition to check if a file exists in the input
 
 2. **Create the Empty PDF Variable**
    - Add a string variable named "EmptyPDFContent"
@@ -74,12 +73,6 @@ Here's an example flow structure:
 
 ![Screenshot of an example flow](/assets/img/posts/flow_example.png)
 
-## Technical Implementation
-
-The trigger can be set up with an optional file input:
-
-![Trigger inputs showing file option](/assets/img/posts/trigger_inputs.png)
-
 The expression used to implement the conditional logic is:
 
 ```
@@ -87,6 +80,12 @@ if(equals(null,triggerBody()?['file'])?['contentBytes']),outputs('Compose_empty_
 ```
 
 This expression checks if the file input is null or empty and provides the appropriate content accordingly.
+
+## Technical Implementation
+
+The trigger can be set up with an optional file input:
+
+![Trigger inputs showing file option](/assets/img/posts/trigger_inputs.png)
 
 ## Why This Works
 
