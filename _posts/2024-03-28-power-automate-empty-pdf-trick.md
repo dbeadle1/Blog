@@ -81,6 +81,25 @@ Here's how I implemented this in my flow:
 
 The first time it worked, I did a literal happy dance at my desk. My coworkers now think I'm slightly unhinged, but WORTH IT.
 
+## A Real Implementation Example 📱
+
+Here's exactly how this looks in a real Power Automate flow:
+
+1. **Start with a trigger** (like a manual button)
+2. **Add a Compose step** named "Compose empty pdf" with our empty PDF content
+3. **Add your Custom Prompt** (like "Create text with GPT")
+4. **Use this expression** in the file input to handle both cases:
+
+```
+if(equals(null,triggerBody()?['file'])?['contentBytes']),outputs('Compose_empty_pdf'),triggerBody()?['file']?['contentBytes'])
+```
+
+This says:
+- If the file input is null/empty → use our empty PDF from the Compose step
+- Otherwise → use the actual file that was provided
+
+![Screenshot of an example flow](/assets/img/posts/empty-pdf-flow-example.jpg)
+
 ## Why This Actually Works (The Nerdy Explanation) 🤓
 
 This trick works because:
