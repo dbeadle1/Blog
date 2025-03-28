@@ -10,19 +10,27 @@ image:
 
 # Power Automate Pro Tip: The Empty PDF Trick for Custom Prompts 🎯
 
-Have you ever encountered a situation in Power Automate where you're working with custom prompts that require a file attachment, but sometimes you don't actually need to attach anything? Today, I'm sharing a clever workaround that will save you time and make your flows more flexible!
+## The Specific Challenge 🤔
 
-## The Challenge 🤔
+You're building a Power Automate flow that uses a Custom Prompt. The prompt has a file input field, and you know how Custom Prompts work - all inputs are mandatory. But here's the catch: your flow sometimes needs to include a file with the prompt, and sometimes it doesn't!
 
-When working with custom prompts in Power Automate, you might encounter this common scenario:
-- Your prompt requires a file attachment as one of the inputs
-- Sometimes you don't actually need to attach a file
-- But the flow won't proceed without a file attachment
-- Skipping the step isn't an option
+This is a common scenario when:
+- Your flow has conditional logic
+- The file attachment is optional in your business process
+- You're handling multiple cases in the same flow
+- The file requirement varies based on user input or other conditions
+
+## The Problem with Custom Prompts 🔍
+
+Custom Prompts in Power Automate have a specific behavior:
+- All input fields are mandatory
+- You can't make an input optional
+- The flow won't proceed without all inputs being provided
+- There's no built-in way to skip a file input
 
 ## The Solution: The Empty PDF Trick 💡
 
-Here's a brilliant workaround: Use a minimal, empty PDF file! This trick allows your flow to proceed while satisfying the file requirement without adding any meaningful overhead.
+Here's a clever workaround: Use a minimal, empty PDF file when you don't have a real file to attach. This trick allows your flow to proceed while satisfying the mandatory file requirement without adding any meaningful overhead.
 
 ### How to Implement It
 
@@ -54,6 +62,7 @@ startxref
 1. **Create Your Flow**
    - Start with your existing flow
    - Add a Condition action before your custom prompt
+   - The condition should check if you have a real file to attach
 
 2. **Add the String Variable**
    - Initialize a new string variable (e.g., "EmptyPDFContent")
@@ -61,15 +70,16 @@ startxref
    - This is more efficient than using a Compose action
 
 3. **Configure the Custom Prompt**
-   - Use the string variable as the file input
-   - The flow will proceed smoothly!
+   - In the "Yes" branch: Use your actual file
+   - In the "No" branch: Use the empty PDF string variable
+   - The flow will proceed smoothly in both cases!
 
 ## Why This Works 🔍
 
 This solution works because:
 - It's a valid PDF file structure
 - It has minimal size (less than 1KB)
-- It satisfies the file requirement
+- It satisfies the mandatory file requirement
 - It doesn't impact performance
 - It's completely empty, so it won't interfere with your workflow
 
@@ -93,20 +103,20 @@ This solution works because:
 
 ## Example Use Cases 📋
 
-1. **Approval Workflows**
-   - Optional document reviews
-   - Conditional attachment requirements
-   - Multi-stage approvals
-
-2. **Document Processing**
-   - Batch file operations
-   - Optional file uploads
-   - Document generation workflows
-
-3. **Form Submissions**
+1. **Document Processing**
    - Optional supporting documents
-   - Conditional attachment requirements
+   - Conditional file requirements
+   - Multi-stage document workflows
+
+2. **Form Submissions**
+   - Optional attachments
+   - Conditional document uploads
    - Multi-step forms
+
+3. **Approval Workflows**
+   - Optional supporting materials
+   - Conditional document reviews
+   - Multi-stage approvals
 
 ## Pro Tips 💪
 
@@ -142,7 +152,7 @@ This solution works because:
 While the empty PDF trick works great, here are some alternatives to consider:
 
 1. **Restructure Your Flow**
-   - Can you make the file truly optional?
+   - Can you split into separate flows?
    - Is there a different approach possible?
    - Could the requirement be changed?
 
@@ -153,7 +163,7 @@ While the empty PDF trick works great, here are some alternatives to consider:
 
 ## Conclusion 🎉
 
-The empty PDF trick is a simple yet powerful solution for handling required file attachments in Power Automate custom prompts. By using a string variable instead of a Compose action, we make the solution even more efficient and maintainable.
+The empty PDF trick is a simple yet powerful solution for handling mandatory file inputs in Power Automate custom prompts. By using a string variable instead of a Compose action, we make the solution even more efficient and maintainable.
 
 Remember: Sometimes the simplest solutions are the most effective!
 
