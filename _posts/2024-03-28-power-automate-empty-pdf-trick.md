@@ -78,7 +78,11 @@ Here's an example flow structure:
 The expression used to implement the conditional logic is:
 
 ```
-if(equals(null,triggerBody()?['file'])?['contentBytes']),outputs('Compose_empty_pdf'),triggerBody()?['file']?['contentBytes'])
+if(
+  equals(triggerBody()?['file'], null),
+  outputs('Compose_empty_pdf'),
+  triggerBody()?['file']?['contentBytes']
+)
 ```
 
 This expression checks if the file input is null or empty and provides the appropriate content accordingly.
