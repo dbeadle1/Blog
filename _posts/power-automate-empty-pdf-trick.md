@@ -66,7 +66,7 @@ Here's how to build this into your flow:
 Start with your preferred trigger (manual, automated, whatever fits).
 
 ### 2. Create a Compose Step for the Empty PDF  
-Add a Compose action called `Compose_empty_pdf`. Paste in the PDF code above as its value.
+Add a Compose action called `Compose empty pdf`. Paste in the PDF code above as its value.
 
 ### 3. Conditional File Handling  
 Check if a file was provided:
@@ -80,7 +80,7 @@ Example expression:
 ```plaintext
 if(
   equals(triggerBody()?['file'], null),
-  outputs('Compose_empty_pdf'),
+  outputs('Compose empty pdf'),
   triggerBody()?['file']?['contentBytes']
 )
 ```
