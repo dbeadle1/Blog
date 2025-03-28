@@ -20,7 +20,7 @@ These AI-powered actions can enhance your flows with intelligent text generation
 
 ## The Challenge: Mandatory File Inputs
 
-The specific scenario: a custom prompt that requires two inputs—a text description and a file to analyze. The problem arises when there isn't always a file to upload.
+The specific scenario: a custom prompt that requires two inputs: a text description and a file to analyze. The problem arises when there isn't always a file to upload.
 
 Custom prompts treat every configured input as mandatory, with no built-in option to make any input optional. When attempting to run a flow without providing a required file, you'll encounter an error like this:
 
