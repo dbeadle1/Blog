@@ -65,8 +65,8 @@ Here's how to build this into your flow:
 ### 1. Set Up Conditional Logic  
 Start with your preferred trigger (manual, automated, whatever fits).
 
-### 2. Create the Empty PDF Variable  
-Add a Compose step called 'Compose_empty_pdf'. Paste in the PDF code above as its value.
+### 2. Create a Compose Step for the Empty PDF  
+Add a Compose action called `Compose_empty_pdf`. Paste in the PDF code above as its value.
 
 ### 3. Conditional File Handling  
 Check if a file was provided:
