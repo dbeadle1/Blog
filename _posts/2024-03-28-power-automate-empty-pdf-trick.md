@@ -71,6 +71,8 @@ Here's how to implement this solution in your flow:
 
 Here's an example flow structure:
 
+> **Note**: In this example, I've used a Compose action for the empty PDF, but using a variable (as described earlier) is a better approach for performance and maintainability.
+
 ![Screenshot of an example flow](/assets/img/posts/flow_example.png)
 
 The expression used to implement the conditional logic is:
