@@ -80,7 +80,7 @@ Example expression:
 ```plaintext
 if(
   equals(triggerBody()?['file'], null),
-  outputs('Compose empty pdf'),
+  outputs('Compose_empty_pdf'),
   triggerBody()?['file']?['contentBytes']
 )
 ```
