@@ -98,7 +98,7 @@ This says:
 - If the file input is null/empty → use our empty PDF from the Compose step
 - Otherwise → use the actual file that was provided
 
-![Screenshot of an example flow](/assets/img/posts/empty-pdf-flow-example.jpg)
+![Screenshot of an example flow](/assets/img/posts/image%20(10).png)
 
 ## Why This Actually Works (The Nerdy Explanation) 🤓
 
