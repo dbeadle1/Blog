@@ -14,7 +14,7 @@ When working with Custom Prompts in Power Automate, you'll likely hit an annoyin
 
 ### What Are Custom Prompts? *(Skip this if you're already using them)*
 
-Custom prompts let you plug GPT-powered AI into your Power Automate flows. Think of them as a way to say, "Hey AI, here's what I want, go do something smart with it."
+Custom prompts let you plug GPT-powered AI into your Power Automate flows. They're a way to feed in your own instructions and get useful, structured output—like summaries, rewrites, or extracted insights—based on text or files you provide.
 
 You define what kind of input the AI should expect (like text, a file, or both), and write a prompt that tells it what to do: summarise, analyse, extract info, rewrite, you name it.
 
@@ -34,7 +34,7 @@ You might try passing `null`, an empty string, or even a `.txt` file. No dice. I
 
 So here's the workaround: give it what it wants. A PDF. A completely empty one.
 
-This teeny-tiny PDF will do the trick:
+Here's the world's smallest valid PDF:
 
 ```plaintext
 %PDF-1.1
@@ -72,6 +72,7 @@ Add a string variable called `EmptyPDFContent`. Paste in the PDF code above as i
 Check if a file was provided:
 
 - If yes: use the uploaded file
+
 - If no: use your empty PDF (from either a Compose step or a string variable)
 
 Example expression:
