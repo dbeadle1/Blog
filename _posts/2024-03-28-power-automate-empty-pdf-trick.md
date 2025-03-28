@@ -74,7 +74,7 @@ Here's how to implement this solution:
 
 Here's what the flow looks like:
 
-![Screenshot of an example flow](/assets/img/posts/image%20(10).png)
+![Screenshot of an example flow](/assets/img/posts/flow_example.png)
 
 ## A Practical Example
 
