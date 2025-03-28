@@ -26,8 +26,8 @@ Here's a brilliant workaround: Use a minimal, empty PDF file! This trick allows 
 
 ### How to Implement It
 
-1. **Add a Compose Action** to your flow
-2. **Insert this minimal PDF content**:
+1. **Add a String Variable** to your flow
+2. **Set the variable value** to this minimal PDF content:
 
 ```plaintext
 %PDF-1.1
@@ -55,13 +55,13 @@ startxref
    - Start with your existing flow
    - Add a Condition action before your custom prompt
 
-2. **Add the Compose Action**
-   - In the branch where you don't need a real file
-   - Name it something like "Empty PDF Generator"
-   - Paste the PDF content above
+2. **Add the String Variable**
+   - Initialize a new string variable (e.g., "EmptyPDFContent")
+   - Set its value to the PDF content above
+   - This is more efficient than using a Compose action
 
 3. **Configure the Custom Prompt**
-   - Use the output from your Compose action as the file input
+   - Use the string variable as the file input
    - The flow will proceed smoothly!
 
 ## Why This Works 🔍
@@ -77,7 +77,7 @@ This solution works because:
 
 1. **Documentation**
    - Comment your flow to explain the empty PDF usage
-   - Name your Compose action clearly
+   - Name your variable clearly (e.g., "EmptyPDFContent")
    - Consider adding a note about why this solution is implemented
 
 2. **Error Handling**
@@ -86,6 +86,7 @@ This solution works because:
    - Have a fallback plan if needed
 
 3. **Performance**
+   - Using a string variable is more efficient than a Compose action
    - The empty PDF is extremely lightweight
    - No impact on flow execution time
    - Minimal storage usage
@@ -110,7 +111,7 @@ This solution works because:
 ## Pro Tips 💪
 
 1. **Reusability**
-   - Save the empty PDF Compose action as a template
+   - Save the empty PDF string as a variable in your environment
    - Reuse it across different flows
    - Share with your team
 
@@ -127,7 +128,7 @@ This solution works because:
 ## Troubleshooting Common Issues 🔧
 
 1. **Custom Prompt Not Accepting the File**
-   - Verify the PDF content is copied correctly
+   - Verify the PDF content is copied correctly into the string variable
    - Check for any special characters
    - Ensure proper line breaks
 
@@ -152,7 +153,7 @@ While the empty PDF trick works great, here are some alternatives to consider:
 
 ## Conclusion 🎉
 
-The empty PDF trick is a simple yet powerful solution for handling required file attachments in Power Automate custom prompts. It's elegant, efficient, and gets the job done without any overhead.
+The empty PDF trick is a simple yet powerful solution for handling required file attachments in Power Automate custom prompts. By using a string variable instead of a Compose action, we make the solution even more efficient and maintainable.
 
 Remember: Sometimes the simplest solutions are the most effective!
 
