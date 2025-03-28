@@ -71,7 +71,7 @@ Start with your preferred trigger (manual, automated, whatever fits).
 Add a Compose action called `Compose empty pdf`. Paste in the PDF code above as its value.
 
 ### 3. Conditional File Handling  
-Check if a file was provided:
+We will use an expression to check if a file was provided..
 
 - If yes: use the uploaded file
 
