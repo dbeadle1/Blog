@@ -1,0 +1,25 @@
+title: My Tech Adventures
+description: A blog about AI, Power Automate, and Copilot Studio
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Author information
+author:
+  name: Your Name
+  email: your.email@example.com
+  bio: Tech enthusiast exploring AI, Power Automate, and Copilot Studio
+  location: Your Location
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/yourusername"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://linkedin.com/in/yourusername" 
