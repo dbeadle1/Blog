@@ -69,9 +69,10 @@ Start with your preferred trigger (manual, automated, whatever fits).
 Add a string variable called `EmptyPDFContent`. Paste in the PDF code above as its value.
 
 ### 3. Conditional File Handling  
-Check if a file was provided:  
-- If yes: use the uploaded file.  
-- If no: use your `EmptyPDFContent` variable instead.
+Check if a file was provided:
+
+- If yes: use the uploaded file
+- If no: use your empty PDF (from either a Compose step or a string variable)
 
 Example expression:
 
@@ -83,7 +84,7 @@ if(
 )
 ```
 
-You can implement this using a Compose action, but using a variable helps with performance and clarity.
+You can use a Compose action to hold the minimal PDF string, or store it in a string variable if you prefer. Either approach works—just keep it consistent and easy to maintain.
 
 ![Screenshot of an example flow](/assets/img/posts/flow_example.png)
 
