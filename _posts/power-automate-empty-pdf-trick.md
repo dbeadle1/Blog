@@ -34,7 +34,7 @@ You might try passing `null`, an empty string, or even a `.txt` file. No dice. I
 
 So here's the workaround: give it what it wants. A PDF. A completely empty one.
 
-But we're not gonna mess around with getting file content or converting anything to or from base64, we're just gonna use a special string in a Compose action.
+The beauty of this approach is its simplicity—no need to deal with file conversions or base64 encoding. Just a plain text string in a Compose action.
 
 Here's the world's smallest valid PDF:
 
