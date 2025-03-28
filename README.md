@@ -14,16 +14,6 @@ This blog is built using Jekyll and hosted on GitHub Pages. It serves as a platf
 - Automation
 - Technology Tips and Tricks
 
-## Local Development
-
-To run this blog locally:
-
-1. Install Ruby and Jekyll
-2. Clone this repository
-3. Run `bundle install`
-4. Run `bundle exec jekyll serve`
-5. Visit `http://localhost:4000`
-
 ## Contributing
 
 Feel free to open issues or submit pull requests if you find any errors or have suggestions for improvements.

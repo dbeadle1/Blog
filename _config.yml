@@ -1,25 +1,67 @@
-title: My Tech Adventures
-description: A blog about AI, Power Automate, and Copilot Studio
-baseurl: ""
-url: ""
+theme: jekyll-theme-chirpy
+baseurl: "/Blog"
+url: "https://dbeadle1.github.io"
+lang: en
+timezone: America/New_York
 
-# Build settings
-markdown: kramdown
-theme: minima
+title: Tech Adventures
+tagline: Exploring AI, Power Automate, and Modern Tech
+description: A journey through AI, Power Automate, Copilot Studio, and modern technology innovations.
+
+github:
+  username: dbeadle1
+
+twitter:
+  username: # your-twitter-username
+
+social:
+  name: Your Name
+  email: your.email@example.com
+  links:
+    - https://github.com/dbeadle1
+    # - https://twitter.com/username
+    # - https://www.linkedin.com/in/username
+
+google_site_verification: # Fill in your verification string
+
+# Theme Settings
+theme_mode: # [light|dark]
+img_cdn: ""
+avatar: "assets/img/avatar.jpg"
+
+toc: true
+
+comments:
+  active: giscus
+  giscus:
+    repo: # your-repo/name
+    repo_id: # your-repo-id
+    category: Announcements
+    category_id: # your-category-id
+    mapping: pathname
+    input_position: bottom
+    lang: en
+    reactions_enabled: 1
+
+# Jekyll Plugin Settings
 plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
   - jekyll-feed
   - jekyll-seo-tag
 
-# Author information
-author:
-  name: Your Name
-  email: your.email@example.com
-  bio: Tech enthusiast exploring AI, Power Automate, and Copilot Studio
-  location: Your Location
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/yourusername"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/in/yourusername" 
+paginate: 10
+
+# Exclude files/folders
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/ 
