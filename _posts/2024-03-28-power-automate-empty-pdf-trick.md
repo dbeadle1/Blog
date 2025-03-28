@@ -14,7 +14,9 @@ We've all been there - you're building a flow in Power Automate that's working p
 
 ## The Challenge with Custom Prompts 🤔
 
-When working with Custom Prompts in Power Automate, I encountered a common scenario. My prompt required a file attachment, but in some cases, my users wouldn't have a file to attach. The problem?
+Here's the specific scenario: I have a custom prompt that accepts two dynamic inputs - a text input and a file. Sometimes I'll be including a file and sometimes I won't. And therein lies the problem.
+
+When working with Custom Prompts in Power Automate, I encountered this common scenario where my prompt required a file attachment, but in some cases, my users wouldn't have a file to attach. The issue is that custom prompts don't allow for optional inputs.
 
 Custom Prompts don't handle this well:
 - All input fields are mandatory
