@@ -1,50 +1,36 @@
 ---
-title: "The Empty PDF Trick That Saved My Power Automate Sanity"
+title: "The Empty PDF Trick for Power Automate Custom Prompts"
 date: 2024-03-28 15:30:00 -0500
 categories: [Tips & Tricks, Power Automate]
-tags: [power-automate, automation, microsoft, tips, custom-prompts, workflow, life-hacks]
+tags: [power-automate, automation, microsoft, tips, custom-prompts, workflow, solution]
 image:
   path: /assets/img/headers/custom-prompts.jpg
   alt: Power Automate Custom Prompts
 ---
 
-# The Empty PDF Trick That Saved My Power Automate Sanity 🔧
+# The Empty PDF Trick for Power Automate Custom Prompts 🔧
 
-It was 4:45 PM on a Friday. I'd spent the last three hours staring at the same error message while my manager kept asking when our new approval flow would be ready for Monday's launch. The coffee on my desk had gone cold. Twice.
+When working with Custom Prompts in Power Automate, you may encounter a frustrating limitation: all inputs are mandatory, even when they logically should be optional. This post shares a practical solution for handling optional file inputs in a workflow environment that doesn't support them natively.
 
-The culprit? Custom Prompts in Power Automate and their stubborn refusal to accept optional files.
+## What Are Custom Prompts?
 
-## What Are Custom Prompts Anyway?
+Custom prompts in Power Automate allow you to integrate GPT models into your automation flows. They're part of AI Builder and provide a way to generate text based on specific instructions.
 
-If you're not deep in the Power Automate trenches yet, custom prompts are Microsoft's way of letting you use GPT models in your flows. Pretty cool when they work. Intensely frustrating when they don't.
+These AI-powered actions can enhance your flows with intelligent text generation, but they come with some limitations. For more details, see Microsoft's [official documentation](https://learn.microsoft.com/en-us/ai-builder/use-a-custom-prompt-in-flow).
 
-These AI-powered actions let you generate text based on specific instructions. Our team has been using them to automate content creation for our document reviews. Game changer... until they aren't.
+## The Challenge: Mandatory File Inputs
 
-You can read Microsoft's perfectly sanitized explanation [here](https://learn.microsoft.com/en-us/ai-builder/use-a-custom-prompt-in-flow), but let me tell you how it actually goes down in the real world.
+The specific scenario: a custom prompt that requires two inputs—a text description and a file to analyze. The problem arises when there isn't always a file to upload.
 
-## The Most Annoying Limitation Ever 🤦‍♂️
-
-Here's my exact scenario: I built a custom prompt that needs two inputs — a text description and a file to analyze. Simple enough.
-
-Except — and here's where I lost hours of my life I'll never get back — sometimes my team doesn't have a file to upload. Maybe 40% of the time, it's just text.
-
-Should be simple, right? Just make the file optional. NOPE.
-
-I dug through every setting, checked every option, and even tried convincing myself I was missing something obvious. Three cups of coffee later, the truth was inescapable: custom prompts treat every input as mandatory. Every. Single. One.
-
-When you try running the flow without a file, you get this lovely gem:
+Custom prompts treat every configured input as mandatory, with no built-in option to make any input optional. When attempting to run a flow without providing a required file, you'll encounter an error like this:
 
 ![Bad request error in Power Automate](/assets/img/posts/badrequest.png)
 
-Error in the application? YOU THINK? My first instinct was to file a bug report. My second was to throw my laptop out the window. I did neither.
+## The Solution: An Empty PDF File 💡
 
-## The Empty PDF Hack (Because That's What It Is) 💡
+After exploring several approaches, a simple but effective solution emerged: providing a minimal, valid PDF file when no actual file is available.
 
-After my third failed attempt to find a proper solution, I remembered a trick we used in a different system years ago. What if I just... fed it an empty file?
-
-My first try was with an empty text file. Crashed spectacularly. Power Automate knew it was being tricked. Cue facepalm moment.
-
-But then I tried a minimal PDF — literally the smallest valid PDF structure possible:
+Here's the smallest valid PDF structure that works for this purpose:
 
 ```plaintext
 %PDF-1.1
@@ -66,102 +52,104 @@ startxref
 %%EOF
 ```
 
-And it WORKED. I'm not saying I did a victory dance around my desk, but my office chair definitely did a full 360° spin.
+This minimal PDF satisfies the input requirement while adding negligible overhead to your flow.
 
-Is this elegant? Not even close. But hey, sometimes the messiest hacks are the ones that save your deadline.
+## Implementation Steps
 
-## How I Actually Implemented This
+Here's how to implement this solution in your flow:
 
-Here's how I set it up in our production environment (which, by the way, has ridiculous DLP policies that made this whole ordeal even more fun):
+1. **Set Up Conditional Logic**
+   - Start with your trigger (manual, automated, etc.)
+   - Add a condition to check if a file exists in the input
 
-1. **Set Up the Logic**
-   - Started with our standard manual trigger
-   - Added a condition checking if a file exists
-   - Tried five different approaches before landing on what actually worked
+2. **Create the Empty PDF Variable**
+   - Add a string variable named "EmptyPDFContent"
+   - Set its value to the PDF content shown above
 
-2. **The Empty PDF Magic**
-   - Created a string variable (I named mine "EmptyPDFTrick" so others would know exactly what shenanigans I was up to)
-   - Pasted that PDF skeleton above into it
-   - Skipped the Compose action because we needed all the performance we could get
+3. **Configure the Conditional Path**
+   - When there's a real file: Use the actual file in the custom prompt
+   - When there's no file: Use the empty PDF variable instead
 
-3. **The Conditional Logic**
-   - When there's a real file: Used that in the custom prompt
-   - When there's no file: Fed it my empty PDF imposter
-   - Watched in satisfaction as it ran flawlessly. FINALLY.
-
-Here's my actual flow (company identifiers removed to protect the innocent):
+Here's an example flow structure:
 
 ![Screenshot of an example flow](/assets/img/posts/flow_example.png)
 
-## The Technical Details (For Those Who Care)
+## Technical Implementation
 
-Our trigger is set up with an optional file input, like this:
+The trigger can be set up with an optional file input:
 
 ![Trigger inputs showing file option](/assets/img/posts/trigger_inputs.png)
 
-And the expression I'm using to make this work is:
+The expression used to implement the conditional logic is:
 
 ```
 if(equals(null,triggerBody()?['file'])?['contentBytes']),outputs('Compose_empty_pdf'),triggerBody()?['file']?['contentBytes'])
 ```
 
-When I first wrote this expression, I had to triple-check it because one misplaced parenthesis and the whole thing would explode. Been there, done that, got the error screenshots to prove it.
+This expression checks if the file input is null or empty and provides the appropriate content accordingly.
 
-## Why This Actually Works
+## Why This Works
 
-It's like bringing an inflatable pool toy to a swimming test. Technically, you're floating, even if it's not how the instructors intended.
+This solution works because:
 
-The PDF validation only checks if:
-1. The file starts with %PDF
-2. The structure is technically valid
-3. It can be parsed
+1. The PDF validation only verifies:
+   - The file starts with %PDF
+   - The structure is technically valid
+   - It can be parsed
 
-It doesn't care if there's actual content. It's like the bouncer who only checks if your ID exists, not if it's any good.
+2. The empty PDF satisfies these requirements while:
+   - Being extremely small (less than 1KB)
+   - Having no actual content to process
+   - Not affecting downstream operations
 
-## Real Life Scenarios Where This Saved My Bacon
+## Practical Applications
 
-This wasn't just a theoretical exercise. This trick saved our quarterly review process last month when we had to process 178 documents, around 70 of which had no attachments.
+This technique is particularly useful for:
 
-Before finding this workaround, I had built TWO SEPARATE FLOWS:
-- One for submissions with files
-- One for submissions without
+1. **Document Review Processes**
+   - When supporting documents are optional but the workflow is consistent
 
-Tried maintaining that setup for two weeks. Absolute nightmare. 0/10, would not recommend.
+2. **Form Submissions**
+   - For handling forms where attachments may or may not be provided
 
-With this trick, we consolidated everything into one flow. The business users have no idea about the digital contortions happening behind the scenes, and that's exactly how it should be.
+3. **Approval Workflows**
+   - When documentation requirements vary by case type
 
-## Tips From Someone Who Learned The Hard Way
+Using this approach allows consolidation of multiple flows into a single flow, significantly reducing maintenance overhead.
 
-1. **Name Things Clearly**
-   I've inherited enough flows with mysterious variable names like "Variable1" to know better. Name it "EmptyPDFForMissingFiles" and save the next person some grief.
+## Best Practices
 
-2. **Comment Your Flow**
-   Trust me on this one. In six months, you'll have NO MEMORY of why this weird PDF thing is in your flow. Future You will thank Present You for the explanation.
+For maintainability and clarity:
 
-3. **Add Error Handling**
-   Because something will eventually break. It always does. My flow has a nice try-catch that emails me if things explode so I can fix it before anyone notices.
+1. **Use Descriptive Names**
+   - Name your variable something clear like "EmptyPDFForMissingFiles"
 
-## Other Approaches I Tried Before Landing Here
+2. **Add Comments**
+   - Document the purpose of the empty PDF in your flow
 
-Let's save you some time:
+3. **Implement Error Handling**
+   - Add appropriate error handling around your custom prompt actions
 
-1. **Using Flow Branches**
-   Tried splitting the flow based on whether a file exists. Ended up with an overly complex mess.
+## Alternative Approaches Considered
+
+Other potential solutions, each with their own drawbacks:
+
+1. **Creating Separate Flows**
+   - One for submissions with files, one without
+   - Increases maintenance complexity significantly
 
 2. **Multiple Custom Prompts**
-   Attempted using different prompt actions for with/without file scenarios. The maintenance was a nightmare.
+   - Different actions for different scenarios
+   - Leads to workflow duplication
 
-3. **Waiting for Microsoft to Fix It**
-   Ha! I still have the support ticket number. No movement in weeks.
+3. **Different File Types**
+   - Empty text files or other formats
+   - May not work with all custom prompt configurations
 
-Sometimes you just need to solve your own problems.
+## Conclusion
 
-## Final Thoughts 
+While not the most elegant solution, this empty PDF approach provides a practical workaround to a current limitation in Power Automate custom prompts. It enables streamlined workflows when dealing with optional file inputs in a system that doesn't natively support them.
 
-This isn't the most beautiful solution I've ever created. In fact, it feels a bit like using duct tape to fix a leaky pipe. But in the world of enterprise automation, sometimes duct tape is all you've got.
+Have you encountered similar limitations in Power Automate? Share your own solutions in the comments.
 
-And you know what? It's been running flawlessly for three months across four different flows processing hundreds of documents. Sometimes the ugly solutions are the ones that keep working when the elegant ones fall apart.
-
-Have you run into similar limitations? Found your own questionable-but-effective workarounds? Drop them in the comments — always looking to add more tricks to my "break glass in case of emergency" toolkit.
-
-#PowerAutomate #RealWorldAutomation #HacksAndWorkarounds #MicrosoftFlow 
+#PowerAutomate #Automation #WorkflowSolutions #MicrosoftFlow #TechnicalTips 
