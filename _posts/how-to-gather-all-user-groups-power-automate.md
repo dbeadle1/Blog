@@ -21,25 +21,34 @@ When you ask Microsoft Graph for a user's groups, it might not give you everythi
 ### 1. Identify the User We're Interested In
 First, we use the **Get user profile (V2)** action. This just tells Power Automate who we're talking about and gets the user's ID. Easy!
 
-![Get User Profile Action](/assets/img/posts/get-user-profile.jpg)
+![Manual trigger and Get user profile configuration](/assets/img/posts/get-user-profile.jpg)
 
 ### 2. Prepare a Place to Collect the Groups
-Next, we create an array variable called `Usergroups`. Think of this as our shopping cart where we'll drop all the group IDs we find along the way. We also set up another variable called `varNextlink`. This is where we store the link to the next "page" of results (if there is one). Initially, we give this variable a value to kick off our very first request to Microsoft Graph and start gathering groups:
+Next, we create an array variable called `Usergroups`. Think of this as our shopping cart where we'll drop all the group IDs we find along the way. We also set up another variable called `varNextlink`. This is where we store the link to the next "page" of results (if there is one).
 
-```plaintext
+![Initialize variables configuration](/assets/img/posts/initialize-variables.jpg)
+
+Initially, we give `varNextlink` a value to kick off our very first request to Microsoft Graph and start gathering groups:
+
+```
 https://graph.microsoft.com/v1.0/users/@{outputs('Get_user_profile_(V2)')?['body/id']}/transitiveMemberOf
 ```
+
+This URL is special because:
+- It uses the Microsoft Graph API
+- It includes the user's ID dynamically using an expression
+- The `transitiveMemberOf` endpoint gets ALL group memberships (direct and inherited)
 
 ### 3. Let's Get Looping: The "Do Until" Loop
 The "Do Until" loop is where the magic happens. It keeps running until there's no more data to fetch. How does it know when to stop? Simple—it checks if `varNextlink` is empty:
 
-```plaintext
+```
 @equals(empty(variables('varNextlink')),true)
 ```
 
 If it's empty, the loop knows it's time to wrap things up. Otherwise, it keeps going!
 
-![Do Until Loop Configuration](/assets/img/posts/do-until-loop.jpg)
+![Do Until loop with HTTP request](/assets/img/posts/do-until-loop.jpg)
 
 Inside the Do Until loop, we:
 - Send an HTTP Request: This uses the current value of `varNextlink` to ask for the next set of groups. If Microsoft Graph has more for us, it sends back another link for the next batch.
@@ -48,20 +57,29 @@ Inside the Do Until loop, we:
 ### 4. Combining What We've Found So Far
 Once we have those group IDs, we use a function called `union()` to smoosh everything together in one neat list. It makes sure that any duplicate groups are removed, so we don't accidentally count the same group twice. This keeps our list tidy and accurate.
 
-Then, we update our `Usergroups` variable to hold this new, combined list.
+![Select and combine group IDs](/assets/img/posts/select-combine-groups.jpg)
 
-![Combining Groups](/assets/img/posts/combining-groups.jpg)
+Then, we update our `Usergroups` variable to hold this new, combined list using the expression:
+
+```
+union(variables('Usergroups'),body('Select_group_ids'))
+```
 
 ### 5. Check if There's More to Fetch
 Also inside our Do Until loop, we update `varNextlink` with the next page link (if there is one). If there's no next page, this link is left blank, and the loop knows to stop. That's it! The loop continues to run until everything's been grabbed.
 
-```plaintext
+![Set next link variable](/assets/img/posts/set-nextlink.jpg)
+
+The expression we use is:
+```
 @{body('Send_an_HTTP_request')?['@odata.nextLink']}
 ```
 
 ## And That's a Wrap! 🎉
 
 Once the "Do Until" loop finishes, the `Usergroups` variable contains all the groups the user is a part of—no matter how many pages of results it took to get there. This flow does all the hard work for you, and you end up with the complete list of groups, all in one go.
+
+![Complete flow overview](/assets/img/posts/complete-flow.jpg)
 
 So, whenever you need to round up all of a user's groups, you've got this simple pattern to follow. It's efficient, flexible, and works like a charm!
 
