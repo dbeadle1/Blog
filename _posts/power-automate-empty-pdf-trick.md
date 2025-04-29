@@ -26,7 +26,7 @@ More on custom prompts here: [official documentation](https://learn.microsoft.co
 
 Let's say you've got a custom prompt that takes two inputs: a text description and a file to analyze. Sometimes there's no file, and you'd expect the flow to just handle it. But nope, if that file input is empty, you'll get slapped with a bad request error:
 
-![Bad request error in Power Automate](/assets/img/posts/get-user-profile.jpg)
+![Bad request error in Power Automate](/assets/img/posts/bad-request-error.jpg)
 
 You might try passing `null`, an empty string, or even a `.txt` file. No dice. It has to be a PDF.
 
