@@ -4,7 +4,7 @@ date: 2024-04-16 16:00:00 -0500
 categories: [Tips & Tricks, Power Automate]
 tags: [power-automate, automation, microsoft, tips, ai, gpt, cost-optimization, workflow, solution]
 image:
-  path: /assets/img/headers/smart-routing.jpg
+  path: /assets/img/posts/complete-flow.jpg
   alt: Smart Model Routing in Power Automate
 ---
 
@@ -26,7 +26,7 @@ This setup uses two OpenAI models within a Power Automate flow:
 
 Here's how the flow looks in Power Automate:
 
-![Power Automate Flow Overview](/assets/img/posts/smart-routing-flow.jpg)
+![Power Automate Flow Overview](/assets/img/posts/do-until-loop.jpg)
 
 ### Step-by-Step Breakdown
 
@@ -43,7 +43,7 @@ The system message for GPT-4o-mini instructs it to:
 
 This makes GPT-4o-mini a lightweight classifier and first responder.
 
-![GPT-4o-mini Configuration](/assets/img/posts/gpt4o-mini-config.jpg)
+![GPT-4o-mini Configuration](/assets/img/posts/get-user-profile.jpg)
 
 #### 4. **Condition Check**
 If GPT-4o-mini returns the word `DATA`, the flow continues to the GPT-4.1 path.
@@ -54,7 +54,7 @@ The system message for GPT-4.1 sets it up as an advanced qualitative data analys
 - Answers concisely, using HTML formatting only.
 - Avoids Markdown and ensures full data review with high accuracy.
 
-![GPT-4.1 Configuration](/assets/img/posts/gpt41-config.jpg)
+![GPT-4.1 Configuration](/assets/img/posts/initialize-variables.jpg)
 
 Temperature and `top_p` are both set to 1 for deterministic output, and the token limit is maxed at 64,000 to support large datasets.
 

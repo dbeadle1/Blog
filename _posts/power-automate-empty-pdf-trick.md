@@ -4,7 +4,7 @@ date: 2024-03-28 15:30:00 -0500
 categories: [Tips & Tricks, Power Automate]
 tags: [power-automate, automation, microsoft, tips, custom-prompts, workflow, solution]
 image:
-  path: /assets/img/headers/custom-prompts.jpg
+  path: /assets/img/posts/complete-flow.jpg
   alt: Power Automate Custom Prompts
 ---
 
@@ -26,7 +26,7 @@ More on custom prompts here: [official documentation](https://learn.microsoft.co
 
 Let's say you've got a custom prompt that takes two inputs: a text description and a file to analyze. Sometimes there's no file, and you'd expect the flow to just handle it. But nope, if that file input is empty, you'll get slapped with a bad request error:
 
-![Bad request error in Power Automate](/assets/img/posts/badrequest.png)
+![Bad request error in Power Automate](/assets/img/posts/get-user-profile.jpg)
 
 You might try passing `null`, an empty string, or even a `.txt` file. No dice. It has to be a PDF.
 
@@ -89,7 +89,7 @@ if(
 
 You can use a Compose action to hold the minimal PDF string, or store it in a string variable if you prefer. Either approach works—just keep it consistent and easy to maintain.
 
-![Screenshot of an example flow](/assets/img/posts/flow_example.png)
+![Screenshot of an example flow](/assets/img/posts/do-until-loop.jpg)
 
 ## Why This Works
 
